@@ -6,7 +6,7 @@ This is an online shop with some functionality for shopping online.
 
 - React/ Redux with Typescript
 - Formik
-- 
+- React-Bootstrap with Bootswatch theme
 
 ## Backend
 
