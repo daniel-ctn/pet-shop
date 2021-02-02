@@ -1,4 +1,5 @@
 import React from 'react'
+import {LinkContainer} from 'react-router-bootstrap'
 import {faShoppingCart, faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Container, Nav, Navbar} from 'react-bootstrap';
@@ -12,14 +13,20 @@ const Header: React.FC<HeaderProps> = ({}) => {
         <header>
             <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
                 <Container>
-                    <Navbar.Brand href="/">Pet Shop</Navbar.Brand>
+                    <LinkContainer to="/">
+                        <Navbar.Brand>Puppy Store</Navbar.Brand>
+                    </LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
-                            <Nav.Link href="/cart"><FontAwesomeIcon icon={faShoppingCart}
-                                                                    className="mr-1"/>Cart</Nav.Link>
-                            <Nav.Link href="/login"><FontAwesomeIcon icon={faUser}
-                                                                     className="mr-1"/>Sign In</Nav.Link>
+                            <LinkContainer to="/cart">
+                                <Nav.Link><FontAwesomeIcon icon={faShoppingCart}
+                                                           className="mr-2"/>Cart</Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to="/login">
+                                <Nav.Link><FontAwesomeIcon icon={faUser}
+                                                           className="mr-2"/>Sign In</Nav.Link>
+                            </LinkContainer>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
