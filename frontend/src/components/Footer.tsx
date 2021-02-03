@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProps> = ({}) => {
             <Container>
                 <Row>
                     <Col className="text-center py-3">
-                        Copyright &copy; Pet Shop
+                        Copyright &copy; Puppy Store
                     </Col>
                 </Row>
             </Container>

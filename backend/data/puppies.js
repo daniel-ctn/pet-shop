@@ -1,19 +1,5 @@
-export interface PuppyModel {
-  _id: string;
-  name: string;
-  image: string;
-  description: string;
-  origin: string;
-  temperament: string;
-  price: number;
-  countInStock: number;
-  rating: number;
-  numReviews: number;
-}
-
-const puppies: PuppyModel[] = [
+const puppies = [
   {
-    _id: '1',
     name: 'Chow Chow',
     image: '/images/chowchow.jpg',
     description:
@@ -26,7 +12,6 @@ const puppies: PuppyModel[] = [
     numReviews: 12,
   },
   {
-    _id: '2',
     name: 'Pembroke Welsh Corgi',
     image: '/images/corgi.jpg',
     description:
@@ -39,7 +24,6 @@ const puppies: PuppyModel[] = [
     numReviews: 8,
   },
   {
-    _id: '3',
     name: 'Golden Retriever',
     image: '/images/golden.jpg',
     description:
@@ -52,7 +36,6 @@ const puppies: PuppyModel[] = [
     numReviews: 12,
   },
   {
-    _id: '4',
     name: 'Chihuahua',
     image: '/images/chihuahua.jpg',
     description:
@@ -65,11 +48,10 @@ const puppies: PuppyModel[] = [
     numReviews: 12,
   },
   {
-    _id: '5',
     name: 'Pomeranian',
     image: '/images/pomeranian.jpg',
     description:
-      'The Pomeranian is a breed of dog of the Spitz type that is named for the Pomerania region in north-west Poland and north-east Germany in Central Europe. Classed as a toy dog breed because of its small size, the Pomeranian is descended from larger Spitz-type dogs, specifically the German Spitz.',
+      'The Pomeranian is a breed of dog of the Spitz type that is named for the Pomerania region in north-west Poland and north-east Germany in Central Europe. Classed as a toy dog breed because of its small size, the Pomeranian is descended from larger Spitz-type dogs.',
     origin: 'Germany, Poland',
     temperament: 'Friendly, Intelligent, Sociable, Extroverted, Playful, Active',
     price: 49.99,
@@ -78,13 +60,12 @@ const puppies: PuppyModel[] = [
     numReviews: 10,
   },
   {
-    _id: '6',
     name: 'Shetland Sheepdog',
     image: '/images/shetland.jpg',
     description:
-      'The Shetland Sheepdog, often known as the Sheltie, is a breed of herding dog that originated in the Shetland Islands of Scotland. The original name was Shetland Collie, but this caused controversy among the Rough Collie breeders of the time, so the breed\'s name was formally changed.',
+      'The Shetland Sheepdog aka the Sheltie, is a breed of herding dog that originated in the Shetland Islands of Scotland. The original name was Shetland Collie, but this caused controversy among the Rough Collie breeders of the time, so the breed\'s name was formally changed.',
     origin: 'Scotland',
-    temperament: 'Affectionate, Reserved, Intelligent, Lively, Responsive, Alert, Playful, Loyal, Gentle, Active, Trainable, Strong',
+    temperament: 'Reserved, Intelligent, Lively, Alert, Playful, Loyal, Gentle, Active, Trainable, Strong',
     price: 29.99,
     countInStock: 0,
     rating: 4,

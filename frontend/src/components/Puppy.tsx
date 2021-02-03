@@ -2,7 +2,7 @@ import React from 'react'
 import {Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
-import {PuppyModel} from "../puppies";
+import PuppyModel from "../models/puppies";
 import Rating from "./Rating";
 
 interface PuppyProps {
