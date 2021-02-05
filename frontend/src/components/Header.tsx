@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({}) => {
     return (
         <header>
-            <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+            <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
                 <Container>
                     <LinkContainer to="/">
                         <Navbar.Brand>Puppy Store</Navbar.Brand>

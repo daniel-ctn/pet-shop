@@ -2,7 +2,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from "axios";
 
-import {PuppyTypes} from "./actionTypes/puppyTypes";
+import {PuppyTypes} from "../actionTypes/puppyTypes";
 
 export const requestPuppyList = function(): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
@@ -38,7 +38,7 @@ export const requestSinglePuppy = function(id: string): ThunkAction<Promise<void
         } catch (e) {
             dispatch({
                 type: PuppyTypes.SINGLE_PUPPY_ERROR,
-                payload: e.response.data.message
+                payload: e.message
             })
         }
     };
