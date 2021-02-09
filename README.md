@@ -13,5 +13,6 @@ This is an online shop with some functionality for shopping online.
 
 - NodeJS/ ExpressJS
 - MongoDB with Atlas 
+- JWT Authenticate
 
 
