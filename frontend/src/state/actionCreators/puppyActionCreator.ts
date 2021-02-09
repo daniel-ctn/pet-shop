@@ -2,42 +2,44 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from "axios";
 
-import {PuppyTypes} from "../actionTypes/puppyTypes";
+import {PuppyActionTypes} from "../actionTypes/puppyAction";
 
-export const requestPuppyList = function(): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+export const requestPuppyList = function (): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
         try {
-            dispatch({type: PuppyTypes.PUPPY_LIST_REQUEST})
+            dispatch({type: PuppyActionTypes.PUPPY_LIST_REQUEST})
 
             const {data} = await axios.get('/api/puppy')
 
             dispatch({
-                type: PuppyTypes.PUPPY_LIST_SUCCESS,
+                type: PuppyActionTypes.PUPPY_LIST_SUCCESS,
                 payload: data
             })
+            localStorage.setItem('puppy_list', JSON.stringify(data))
         } catch (e) {
             dispatch({
-                type: PuppyTypes.PUPPY_LIST_ERROR,
+                type: PuppyActionTypes.PUPPY_LIST_ERROR,
                 payload: e.response.data.message
             })
         }
     };
 }
 
-export const requestSinglePuppy = function(id: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+export const requestSinglePuppy = function (id: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
         try {
-            dispatch({type: PuppyTypes.SINGLE_PUPPY_REQUEST})
+            dispatch({type: PuppyActionTypes.SINGLE_PUPPY_REQUEST})
 
             const {data} = await axios.get(`/api/puppy/${id}`)
 
             dispatch({
-                type: PuppyTypes.SINGLE_PUPPY_SUCCESS,
+                type: PuppyActionTypes.SINGLE_PUPPY_SUCCESS,
                 payload: data
             })
+            localStorage.setItem('puppy_detail', JSON.stringify(data))
         } catch (e) {
             dispatch({
-                type: PuppyTypes.SINGLE_PUPPY_ERROR,
+                type: PuppyActionTypes.SINGLE_PUPPY_ERROR,
                 payload: e.message
             })
         }

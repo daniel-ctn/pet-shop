@@ -1,26 +1,45 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 const userSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   isAdmin: {
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
 }, {
-  timestamps: true
+  timestamps: true,
+})
+
+// add method to User model
+userSchema.methods.matchPassword = async function (password) {
+  const compare = bcrypt.compare(password, this.password)
+  return compare
+}
+
+// middleware execute before saving user
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) next()
+
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+  next()
 })
 
 const User = mongoose.model('User', userSchema)

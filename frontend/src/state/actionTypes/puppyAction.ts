@@ -1,6 +1,6 @@
 import PuppyModel from "../../models/puppies";
 
-export enum PuppyTypes {
+export enum PuppyActionTypes {
     PUPPY_LIST_REQUEST = 'PUPPY_LIST_REQUEST',
     PUPPY_LIST_SUCCESS = 'PUPPY_LIST_SUCCESS',
     PUPPY_LIST_ERROR = 'PUPPY_LIST_ERROR',
@@ -10,34 +10,34 @@ export enum PuppyTypes {
 }
 
 interface RequestPuppyListAction {
-    type: typeof PuppyTypes.PUPPY_LIST_REQUEST
+    type: typeof PuppyActionTypes.PUPPY_LIST_REQUEST
 }
 
 interface RequestPuppySuccessAction {
-    type: typeof PuppyTypes.PUPPY_LIST_SUCCESS
+    type: typeof PuppyActionTypes.PUPPY_LIST_SUCCESS
     payload: PuppyModel[]
 }
 
 interface RequestPuppyErrorAction {
-    type: typeof PuppyTypes.PUPPY_LIST_ERROR,
+    type: typeof PuppyActionTypes.PUPPY_LIST_ERROR,
     payload: string
 }
 
 interface RequestSinglePuppyAction {
-    type: typeof PuppyTypes.SINGLE_PUPPY_REQUEST
+    type: typeof PuppyActionTypes.SINGLE_PUPPY_REQUEST
 }
 
 interface SinglePuppySuccessAction {
-    type: typeof PuppyTypes.SINGLE_PUPPY_SUCCESS
+    type: typeof PuppyActionTypes.SINGLE_PUPPY_SUCCESS
     payload: PuppyModel
 }
 
 interface SinglePuppyErrorAction {
-    type: typeof PuppyTypes.SINGLE_PUPPY_ERROR,
+    type: typeof PuppyActionTypes.SINGLE_PUPPY_ERROR,
     payload: string
 }
 
-export type PuppyActionTypes =
+export type PuppyAction =
     RequestPuppyListAction
     | RequestPuppySuccessAction
     | RequestPuppyErrorAction
