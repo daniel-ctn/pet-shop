@@ -1,5 +1,5 @@
 import PuppyModel from "../../models/puppies";
-import {PuppyAction, PuppyAction} from "../actionTypes/puppyAction";
+import {PuppyAction, PuppyActionTypes} from "../actionTypes/puppyAction";
 
 interface PuppyState {
     puppies?: PuppyModel[],

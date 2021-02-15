@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import PuppyPage from "./pages/PuppyPage";
 import CartPage from "./pages/CartPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from './pages/RegisterPage';
 
 const App: React.FC = () => {
     return (
@@ -17,6 +19,8 @@ const App: React.FC = () => {
                     <Route path="/" component={HomePage} exact/>
                     <Route path="/puppy/:id" component={PuppyPage}/>
                     <Route path="/cart/:id?" component={CartPage}/>
+                    <Route path="/login" component={LoginPage}/>
+                    <Route path="/register" component={RegisterPage}/>
                 </Container>
             </main>
             <Footer/>

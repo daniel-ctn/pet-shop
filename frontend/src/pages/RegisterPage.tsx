@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 
 import {Col, Container, Row} from "react-bootstrap";
@@ -9,16 +9,19 @@ import {Field, Form, Formik} from 'formik';
 import * as yup from "yup";
 
 import {RootState} from "../state/store";
-import {login} from "../state/actionCreators/userActionCreator";
+import {register} from "../state/actionCreators/userActionCreator";
 import Message from '../components/Message';
 import Loader from "../components/Loader";
 
 const validationSchema = yup.object({
+    name: yup.string().required().max(20),
     email: yup.string().required().email(),
-    password: yup.string().required().min(6)
+    password: yup.string().required().min(6),
+    confirmPw: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
 });
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
+    const history = useHistory()
     const dispatch = useDispatch()
     const {error, loading} = useSelector((state: RootState) => state.user)
 
@@ -26,7 +29,7 @@ const LoginPage: React.FC = () => {
         <Container>
             <Row className="justify-content-center">
                 <Col xs={12} lg={6}>
-                    <h2 className="font-weight-normal">SIGN IN</h2>
+                    <h2 className="font-weight-normal">Register New User</h2>
                     {error && <Message variant="danger">{error}</Message>}
                     {loading && <Loader/>}
                 </Col>
@@ -35,37 +38,39 @@ const LoginPage: React.FC = () => {
                 <Col xs={12} lg={6}>
                     <Formik
                         validateOnChange={true}
-                        initialValues={{email: '', password: ''}}
+                        initialValues={{name: '', email: '', password: '', confirmPw: ''}}
                         validationSchema={validationSchema}
-                        onSubmit={(data) => {
+                        onSubmit={async (data) => {
                             console.log(data)
-                            dispatch(login(data.email, data.password))
+                            await dispatch(register(data.name, data.email, data.password))
+                            history.push('/')
                         }}
                     >
                         {({values, errors}) => (
                             <Form>
+                                <Field placeholder="Name" name="name" type="input" as={TextField}
+                                       fullWidth style={{margin: 10}} error={!!errors.name}
+                                       helperText={errors.name}/>
                                 <Field placeholder="Email" name="email" type="input" as={TextField}
                                        fullWidth style={{margin: 10}} error={!!errors.email}
                                        helperText={errors.email}/>
                                 <Field placeholder="Password" name="password" type="password"
                                        as={TextField} fullWidth style={{margin: 10}}
                                        error={!!errors.password} helperText={errors.password}/>
+                                <Field placeholder="Confirm Password" name="confirmPw" type="password"
+                                       as={TextField} fullWidth style={{margin: 10}}
+                                       error={!!errors.confirmPw} helperText={errors.confirmPw}/>
                                 <Button variant="contained" color="primary" type="submit"
                                         style={{margin: 8}}>
-                                    Sign In
+                                    Register
                                 </Button>
                             </Form>
                         )}
                     </Formik>
                 </Col>
             </Row>
-            <Row className="justify-content-center mt-2">
-                <Col xs={12} lg={6}>
-                    New Customer? <Link to='/register'>Register</Link>
-                </Col>
-            </Row>
         </Container>
     );
 };
 
-export default LoginPage;
+export default RegisterPage;

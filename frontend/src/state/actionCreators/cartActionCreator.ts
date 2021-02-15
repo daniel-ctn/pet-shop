@@ -2,7 +2,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from "axios";
 
-import {CartAction} from "../actionTypes/cartAction";
+import {CartActionTypes} from "../actionTypes/cartAction";
 import {CartModel} from "../../models/cart";
 
 export const addItemToCart = function(id:string, qty: number): ThunkAction<Promise<void>, {}, {}, AnyAction> {

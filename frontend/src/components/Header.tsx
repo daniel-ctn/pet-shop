@@ -2,13 +2,16 @@ import React from 'react'
 import {LinkContainer} from 'react-router-bootstrap'
 import {faShoppingCart, faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Container, Nav, Navbar} from 'react-bootstrap';
+import {Container, Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import {useDispatch, useSelector} from "react-redux";
 
-interface HeaderProps {
+import {RootState} from "../state/store";
+import { logout } from '../state/actionCreators/userActionCreator';
 
-}
+const Header: React.FC = () => {
+    const dispatch = useDispatch()
+    const {userInfo} = useSelector((state: RootState) => state.user)
 
-const Header: React.FC<HeaderProps> = ({}) => {
     return (
         <header>
             <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
@@ -23,10 +26,23 @@ const Header: React.FC<HeaderProps> = ({}) => {
                                 <Nav.Link><FontAwesomeIcon icon={faShoppingCart}
                                                            className="mr-2"/>Cart</Nav.Link>
                             </LinkContainer>
-                            <LinkContainer to="/login">
-                                <Nav.Link><FontAwesomeIcon icon={faUser}
-                                                           className="mr-2"/>Sign In</Nav.Link>
-                            </LinkContainer>
+                            {userInfo ? (
+                                <NavDropdown title={userInfo.name} id="username">
+                                    <LinkContainer to="/profile">
+                                        <NavDropdown.Item>Profile</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <NavDropdown.Item onClick={() => dispatch(logout())}>
+                                        Sign Out
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            ) : (
+                                <LinkContainer to="/login">
+                                    <Nav.Link><FontAwesomeIcon icon={faUser} className="mr-2"/>
+                                        Sign In
+                                    </Nav.Link>
+                                </LinkContainer>
+                            )}
+
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
