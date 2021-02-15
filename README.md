@@ -11,13 +11,13 @@ This is an online shop with some functionality for shopping online.
 
 - React/ Redux with Typescript
 - React router
-- Formik
+- Formik & yup
 - React-Bootstrap with Bootswatch theme
 
 ## Backend
 
 - NodeJS/ ExpressJS
-- MongoDB with Atlas 
+- MongoDB Atlas/ Mongoose
 - JWT Authenticate
 
 
