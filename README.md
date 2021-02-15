@@ -19,5 +19,5 @@ This is an online shop with some functionality for shopping online.
 - NodeJS/ ExpressJS
 - MongoDB Atlas/ Mongoose
 - JWT Authenticate
-
+- File upload
 
