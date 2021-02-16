@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 
@@ -17,13 +17,18 @@ const validationSchema = yup.object({
     name: yup.string().required().max(20),
     email: yup.string().required().email(),
     password: yup.string().required().min(6),
-    confirmPw: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
+    confirmPw: yup.string().required('Confirm password is a required field')
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
 });
 
 const RegisterPage: React.FC = () => {
     const history = useHistory()
     const dispatch = useDispatch()
-    const {error, loading} = useSelector((state: RootState) => state.user)
+    const {userInfo, error, loading} = useSelector((state: RootState) => state.user)
+
+    useEffect(() => {
+        if(userInfo?.name) history.push('/')
+    },[userInfo, history])
 
     return (
         <Container>
@@ -40,10 +45,8 @@ const RegisterPage: React.FC = () => {
                         validateOnChange={true}
                         initialValues={{name: '', email: '', password: '', confirmPw: ''}}
                         validationSchema={validationSchema}
-                        onSubmit={async (data) => {
-                            console.log(data)
-                            await dispatch(register(data.name, data.email, data.password))
-                            history.push('/')
+                        onSubmit={(data) => {
+                            dispatch(register(data.name, data.email, data.password))
                         }}
                     >
                         {({values, errors}) => (

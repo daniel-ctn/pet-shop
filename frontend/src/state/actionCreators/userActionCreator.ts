@@ -63,3 +63,31 @@ export const register = function (name: string, email: string, password: string)
     };
 }
 
+export const getUserDetails = function (token: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+        try {
+            dispatch({type: userActionTypes.USER_DETAILS_REQUEST})
+
+            const {data} = await axios.get('/api/user/profile',
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+            dispatch({
+                type: userActionTypes.USER_DETAILS_SUCCESS,
+                payload: data
+            })
+
+            // localStorage.setItem('user_details', JSON.stringify(data))
+        } catch (e) {
+            dispatch({
+                type: userActionTypes.USER_DETAILS_ERROR,
+                payload: e.response.data.message
+            })
+        }
+    };
+}
+

@@ -1,5 +1,5 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 
 import {Col, Container, Row} from "react-bootstrap";
@@ -19,8 +19,13 @@ const validationSchema = yup.object({
 });
 
 const LoginPage: React.FC = () => {
+    const history = useHistory()
     const dispatch = useDispatch()
-    const {error, loading} = useSelector((state: RootState) => state.user)
+    const {userInfo, error, loading} = useSelector((state: RootState) => state.user)
+
+    useEffect(() => {
+        if(userInfo?.name) history.push('/')
+    },[userInfo, history])
 
     return (
         <Container>
