@@ -1,8 +1,8 @@
-# Welcome to Pet Shop
+# Welcome to Puppy Store
 
 This is an online shop with some functionality for shopping online.
 
-- Admin/ user authorization
+- Admin/ User authorization
 - Online payment
 - Searching, filtering product
 - Automatic shopping cart updates
