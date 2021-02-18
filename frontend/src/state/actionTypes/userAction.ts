@@ -11,6 +11,9 @@ export enum userActionTypes {
     USER_DETAILS_REQUEST = 'USER_DETAILS_REQUEST',
     USER_DETAILS_SUCCESS = 'USER_DETAILS_SUCCESS',
     USER_DETAILS_ERROR = 'USER_DETAILS_ERROR',
+    USER_UPDATE_REQUEST = 'USER_UPDATE_REQUEST',
+    USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS',
+    USER_UPDATE_ERROR = 'USER_UPDATE_ERROR',
 }
 
 interface Login {
@@ -51,8 +54,7 @@ interface GetUserDetails {
 }
 
 interface GetUserDetailsSuccess {
-    type: userActionTypes.USER_DETAILS_SUCCESS,
-    payload: UserDetails
+    type: userActionTypes.USER_DETAILS_SUCCESS
 }
 
 interface GetUserDetailsError {
@@ -60,6 +62,21 @@ interface GetUserDetailsError {
     payload: string
 }
 
+interface UpdateUser {
+    type: userActionTypes.USER_UPDATE_REQUEST
+}
+
+interface UpdateUserSuccess {
+    type: userActionTypes.USER_UPDATE_SUCCESS,
+    payload: UserInfo
+}
+
+interface UpdateUserError {
+    type: userActionTypes.USER_UPDATE_ERROR,
+    payload: string
+}
+
 export type UserAction = Login | LoginSuccess | LoginError | Logout
     | Register | RegisterSuccess | RegisterError
     | GetUserDetails | GetUserDetailsSuccess | GetUserDetailsError
+    | UpdateUser | UpdateUserSuccess | UpdateUserError

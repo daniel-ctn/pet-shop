@@ -9,9 +9,9 @@ import {Field, Form, Formik} from 'formik';
 import * as yup from "yup";
 
 import {RootState} from "../state/store";
-import {register} from "../state/actionCreators/userActionCreator";
 import Message from '../components/Message';
 import Loader from "../components/Loader";
+import {register} from "../state/actionCreators/userActionCreator";
 
 const validationSchema = yup.object({
     name: yup.string().required().max(20),
@@ -27,8 +27,8 @@ const RegisterPage: React.FC = () => {
     const {userInfo, error, loading} = useSelector((state: RootState) => state.user)
 
     useEffect(() => {
-        if(userInfo?.name) history.push('/')
-    },[userInfo, history])
+        if (userInfo?.name) history.push('/')
+    }, [userInfo, history])
 
     return (
         <Container>

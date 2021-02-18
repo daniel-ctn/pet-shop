@@ -43,7 +43,6 @@ const LoginPage: React.FC = () => {
                         initialValues={{email: '', password: ''}}
                         validationSchema={validationSchema}
                         onSubmit={(data) => {
-                            console.log(data)
                             dispatch(login(data.email, data.password))
                         }}
                     >

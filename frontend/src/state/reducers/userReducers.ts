@@ -1,16 +1,14 @@
 import {UserAction, userActionTypes} from "../actionTypes/userAction";
-import {UserDetails, UserInfo} from "../../models/user";
+import {UserInfo} from "../../models/user";
 
 interface UserState {
     userInfo: UserInfo | null,
-    userDetails: UserDetails | null,
     loading: boolean,
     error: string
 }
 
 const initialState: UserState = {
     userInfo: null,
-    userDetails: null,
     loading: false,
     error: ''
 }
@@ -34,9 +32,15 @@ export const userReducers = (state = initialState, action: UserAction): UserStat
         case userActionTypes.USER_DETAILS_REQUEST:
             return {...state, loading: true, error: ''}
         case userActionTypes.USER_DETAILS_SUCCESS:
-            return {...state, loading: false, userDetails: action.payload}
+            return {...state, loading: false}
         case userActionTypes.USER_DETAILS_ERROR:
-            return {...state, loading: false, userDetails: null, error: action.payload}
+            return {...state, loading: false, userInfo: null, error: action.payload}
+        case userActionTypes.USER_UPDATE_REQUEST:
+            return {...state, loading: true, error: ''}
+        case userActionTypes.USER_UPDATE_SUCCESS:
+            return {...state, loading: false, userInfo: action.payload}
+        case userActionTypes.USER_UPDATE_ERROR:
+            return {...state, loading: false, userInfo: null, error: action.payload}
         default:
             return state
     }

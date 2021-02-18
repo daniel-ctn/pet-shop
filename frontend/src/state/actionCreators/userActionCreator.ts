@@ -2,6 +2,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from "axios";
 import {userActionTypes} from "../actionTypes/userAction";
+import {UserDetails} from "../../models/user";
 
 export const login = function (email: string, password: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
@@ -77,14 +78,42 @@ export const getUserDetails = function (token: string): ThunkAction<Promise<void
                 })
 
             dispatch({
-                type: userActionTypes.USER_DETAILS_SUCCESS,
-                payload: data
+                type: userActionTypes.USER_DETAILS_SUCCESS
             })
 
             // localStorage.setItem('user_details', JSON.stringify(data))
         } catch (e) {
             dispatch({
                 type: userActionTypes.USER_DETAILS_ERROR,
+                payload: e.response.data.message
+            })
+        }
+    };
+}
+
+export const updateUserProfile = function (user: UserDetails): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+        try {
+            dispatch({type: userActionTypes.USER_UPDATE_REQUEST})
+
+            const {data} = await axios.put('/api/user/profile',
+                {...user},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${user.token}`
+                    }
+                })
+
+            dispatch({
+                type: userActionTypes.USER_UPDATE_SUCCESS,
+                payload: {...data, token: user.token}
+            })
+
+            // localStorage.setItem('user_details', JSON.stringify(data))
+        } catch (e) {
+            dispatch({
+                type: userActionTypes.USER_UPDATE_ERROR,
                 payload: e.response.data.message
             })
         }

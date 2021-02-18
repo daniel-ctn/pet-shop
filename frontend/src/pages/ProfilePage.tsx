@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {getUserDetails} from "../state/actionCreators/userActionCreator";
+import {getUserDetails, updateUserProfile} from "../state/actionCreators/userActionCreator";
 import {RootState} from "../state/store";
 import {useHistory} from "react-router-dom";
 import {Col, Row} from "react-bootstrap";
@@ -9,6 +9,7 @@ import {Button, TextField} from "@material-ui/core";
 import * as yup from "yup";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import {UserDetails} from "../models/user";
 
 const validationSchema = yup.object({
     name: yup.string().required().max(20),
@@ -19,12 +20,13 @@ const validationSchema = yup.object({
 });
 
 const ProfilePage: React.FC = () => {
+    const [success, setSuccess] = useState<boolean>(false)
     const dispatch = useDispatch()
     const history = useHistory()
-    const {userDetails, userInfo, error, loading} = useSelector((state: RootState) => state.user)
+    const {userInfo, error, loading} = useSelector((state: RootState) => state.user)
 
     useEffect(() => {
-        if(userInfo) dispatch(getUserDetails(userInfo.token))
+        if (userInfo) dispatch(getUserDetails(userInfo.token))
         else history.push('/login')
     }, [dispatch, userInfo, history])
 
@@ -33,18 +35,28 @@ const ProfilePage: React.FC = () => {
             <Col xs={12} sm={4}>
                 <h2 className="font-weight-normal">User Profile</h2>
                 {error && <Message variant="danger">{error}</Message>}
+                {(success && !loading) && <Message variant="success">Profile Updated</Message>}
                 {loading && <Loader/>}
                 <Formik
                     validateOnChange={true}
                     initialValues={{
-                        name: userDetails?.name,
-                        email: userDetails?.email,
+                        name: userInfo?.name,
+                        email: userInfo?.email,
                         password: '',
                         confirmPw: ''
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={(data) => {
-                        console.log(data)
+                    onSubmit={async (data) => {
+                        if (userInfo) {
+                            const updateUser: UserDetails = {
+                                ...userInfo,
+                                name: data.name!,
+                                email: data.email!,
+                                password: data.password
+                            }
+                            await dispatch(updateUserProfile(updateUser))
+                            if(!error) setSuccess(true)
+                        }
                     }}
                 >
                     {({values, errors}) => (
