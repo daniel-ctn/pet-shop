@@ -1,10 +1,8 @@
 import React, {useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
-
 import {Col, Container, Row} from "react-bootstrap";
 import {TextField, Button} from "@material-ui/core";
-
 import {Field, Form, Formik} from 'formik';
 import * as yup from "yup";
 

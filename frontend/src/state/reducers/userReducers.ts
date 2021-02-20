@@ -1,4 +1,4 @@
-import {UserAction, userActionTypes} from "../actionTypes/userAction";
+import {UserAction, userActionTypes} from "../actionTypes";
 import {UserInfo} from "../../models/user";
 
 interface UserState {
@@ -19,7 +19,7 @@ export const userReducers = (state = initialState, action: UserAction): UserStat
             return {...state, loading: true, error: ''}
         case userActionTypes.USER_LOGIN_SUCCESS:
             return {...state, loading: false, userInfo: action.payload}
-        case userActionTypes.USER_LOGIN_ERROR:
+        case userActionTypes.USER_REQUEST_ERROR:
             return {...state, loading: false, userInfo: null, error: action.payload}
         case userActionTypes.USER_LOGOUT:
             return initialState
@@ -27,20 +27,14 @@ export const userReducers = (state = initialState, action: UserAction): UserStat
             return {...state, loading: true, error: ''}
         case userActionTypes.USER_REGISTER_SUCCESS:
             return {...state, loading: false, userInfo: action.payload}
-        case userActionTypes.USER_REGISTER_ERROR:
-            return {...state, loading: false, userInfo: null, error: action.payload}
         case userActionTypes.USER_DETAILS_REQUEST:
             return {...state, loading: true, error: ''}
         case userActionTypes.USER_DETAILS_SUCCESS:
             return {...state, loading: false}
-        case userActionTypes.USER_DETAILS_ERROR:
-            return {...state, loading: false, userInfo: null, error: action.payload}
         case userActionTypes.USER_UPDATE_REQUEST:
             return {...state, loading: true, error: ''}
         case userActionTypes.USER_UPDATE_SUCCESS:
             return {...state, loading: false, userInfo: action.payload}
-        case userActionTypes.USER_UPDATE_ERROR:
-            return {...state, loading: false, userInfo: null, error: action.payload}
         default:
             return state
     }

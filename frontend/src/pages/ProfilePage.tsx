@@ -38,7 +38,8 @@ const ProfilePage: React.FC = () => {
                 {(success && !loading) && <Message variant="success">Profile Updated</Message>}
                 {loading && <Loader/>}
                 <Formik
-                    validateOnChange={true}
+                    validateOnChange={false}
+                    validateOnBlur={true}
                     initialValues={{
                         name: userInfo?.name,
                         email: userInfo?.email,

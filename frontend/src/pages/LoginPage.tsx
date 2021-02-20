@@ -1,17 +1,15 @@
 import React, {useEffect} from 'react'
-import {Link, useHistory} from 'react-router-dom'
+import {Link, useHistory, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
-
 import {Col, Container, Row} from "react-bootstrap";
 import {TextField, Button} from "@material-ui/core";
-
 import {Field, Form, Formik} from 'formik';
 import * as yup from "yup";
 
 import {RootState} from "../state/store";
-import {login} from "../state/actionCreators/userActionCreator";
-import Message from '../components/Message';
+import Message from "../components/Message";
 import Loader from "../components/Loader";
+import {login} from "../state/actionCreators";
 
 const validationSchema = yup.object({
     email: yup.string().required().email(),
@@ -20,12 +18,15 @@ const validationSchema = yup.object({
 
 const LoginPage: React.FC = () => {
     const history = useHistory()
+    const location = useLocation()
     const dispatch = useDispatch()
     const {userInfo, error, loading} = useSelector((state: RootState) => state.user)
 
+    const redirect = location.search ? location.search.split('=')[1] : '/'
+
     useEffect(() => {
-        if(userInfo?.name) history.push('/')
-    },[userInfo, history])
+        if(userInfo?.name) history.push(redirect)
+    },[userInfo, history, redirect])
 
     return (
         <Container>

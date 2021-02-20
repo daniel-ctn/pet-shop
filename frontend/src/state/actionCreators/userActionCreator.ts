@@ -24,7 +24,7 @@ export const login = function (email: string, password: string): ThunkAction<Pro
             // localStorage.setItem('user_info', JSON.stringify(data))
         } catch (e) {
             dispatch({
-                type: userActionTypes.USER_LOGIN_ERROR,
+                type: userActionTypes.USER_REQUEST_ERROR,
                 payload: e.response.data.message
             })
         }
@@ -57,7 +57,7 @@ export const register = function (name: string, email: string, password: string)
             // localStorage.setItem('user_info', JSON.stringify(data))
         } catch (e) {
             dispatch({
-                type: userActionTypes.USER_REGISTER_ERROR,
+                type: userActionTypes.USER_REQUEST_ERROR,
                 payload: e.response.data.message
             })
         }
@@ -69,7 +69,7 @@ export const getUserDetails = function (token: string): ThunkAction<Promise<void
         try {
             dispatch({type: userActionTypes.USER_DETAILS_REQUEST})
 
-            const {data} = await axios.get('/api/user/profile',
+            await axios.get('/api/user/profile',
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export const getUserDetails = function (token: string): ThunkAction<Promise<void
             // localStorage.setItem('user_details', JSON.stringify(data))
         } catch (e) {
             dispatch({
-                type: userActionTypes.USER_DETAILS_ERROR,
+                type: userActionTypes.USER_REQUEST_ERROR,
                 payload: e.response.data.message
             })
         }
@@ -113,7 +113,7 @@ export const updateUserProfile = function (user: UserDetails): ThunkAction<Promi
             // localStorage.setItem('user_details', JSON.stringify(data))
         } catch (e) {
             dispatch({
-                type: userActionTypes.USER_UPDATE_ERROR,
+                type: userActionTypes.USER_REQUEST_ERROR,
                 payload: e.response.data.message
             })
         }

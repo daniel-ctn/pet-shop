@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {ChangeEvent, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation, useParams} from "react-router-dom";
 import {Col, ListGroup, Row, Image, Form, Button, Card} from "react-bootstrap";
@@ -28,9 +28,12 @@ const CartPage: React.FC = () => {
         dispatch(removeCartItem(id))
     }
 
+    const onChangeHandler = (event: ChangeEvent<any>, model: CartModel) => {
+        dispatch(addItemToCart(model.puppy._id, +event.target.value))
+    }
+
     const checkoutHandler = () => {
         history.push('/login?redirect=shipping')
-        console.log('check out')
     }
 
     return (
@@ -54,7 +57,7 @@ const CartPage: React.FC = () => {
                                     </Col>
                                     <Col md={2}>
                                         <Form.Control as="select" value={i.qty}
-                                                      onChange={(e) => dispatch(addItemToCart(i.puppy._id, +e.target.value))}>
+                                                      onChange={(e) => onChangeHandler(e, i)}>
                                             {[...Array(i.puppy.countInStock).keys()].map(k =>
                                                 <option key={k + 1} value={k + 1}>{k + 1}</option>
                                             )}

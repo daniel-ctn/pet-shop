@@ -1,8 +1,9 @@
-import {CartModel} from "../../models/cart";
-import {CartAction, CartActionTypes} from "../actionTypes/cartAction";
+import {CartModel, ShippingInfoModel} from "../../models/cart";
+import {CartAction, CartActionTypes} from "../actionTypes";
 
 interface CartState {
     cartItems: CartModel[],
+    shippingInfo?: ShippingInfoModel,
     loading: boolean
 }
 
@@ -22,6 +23,8 @@ const cartReducers = (state: CartState = initialState, action: CartAction): Cart
             }
         case CartActionTypes.CART_REMOVE_ITEM:
             return {...state, cartItems: state.cartItems.filter(i => i.puppy._id !== action.payload)}
+        case CartActionTypes.SAVE_SHIPPING_INFO:
+            return {...state, shippingInfo: action.payload}
         default:
             return state
     }
