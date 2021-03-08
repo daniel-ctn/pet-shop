@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {getUserDetails, updateUserProfile} from "../state/actionCreators/userActionCreator";
+import {getUserDetails, updateUserProfile} from "../state/actionCreators";
 import {RootState} from "../state/store";
 import {useHistory} from "react-router-dom";
 import {Col, Row} from "react-bootstrap";
@@ -33,7 +33,7 @@ const ProfilePage: React.FC = () => {
     return (
         <Row className="justify-content-center">
             <Col xs={12} sm={4}>
-                <h2 className="font-weight-normal">User Profile</h2>
+                <h2 className="font-weight-normal">Profile</h2>
                 {error && <Message variant="danger">{error}</Message>}
                 {(success && !loading) && <Message variant="success">Profile Updated</Message>}
                 {loading && <Loader/>}
@@ -61,7 +61,7 @@ const ProfilePage: React.FC = () => {
                     }}
                 >
                     {({values, errors}) => (
-                        <Form>
+                        <Form autoComplete="off">
                             <Field placeholder="Name" name="name" type="input" as={TextField}
                                    fullWidth style={{margin: 10}} error={!!errors.name}
                                    helperText={errors.name}/>

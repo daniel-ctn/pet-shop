@@ -2,7 +2,7 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from "axios";
 
-import {PuppyActionTypes} from "../actionTypes/puppyAction";
+import {PuppyActionTypes} from "../actionTypes";
 
 export const requestPuppyList = function (): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {

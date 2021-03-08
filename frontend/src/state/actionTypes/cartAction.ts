@@ -1,9 +1,10 @@
-import {CartModel, ShippingInfoModel} from "../../models/cart";
+import {CartModel, OrderModel, ShippingInfoModel} from "../../models/cart";
 
 export enum CartActionTypes {
     CART_ADD_ITEM = 'CART_ADD_ITEM',
     CART_REMOVE_ITEM = 'CART_REMOVE_ITEM',
-    SAVE_SHIPPING_INFO = 'SAVE_SHIPPING_INFO'
+    SAVE_SHIPPING_INFO = 'SAVE_SHIPPING_INFO',
+    PLACE_ORDER = 'PLACE_ORDER'
 }
 
 interface AddCartItemAction {
@@ -21,6 +22,12 @@ interface SaveShippingInfoAction {
     payload: ShippingInfoModel
 }
 
-export type CartAction = AddCartItemAction | RemoveCartItemAction | SaveShippingInfoAction
+interface PlaceOrderAction {
+    type: CartActionTypes.PLACE_ORDER,
+    payload: OrderModel
+}
+
+export type CartAction = AddCartItemAction | RemoveCartItemAction | SaveShippingInfoAction |
+    PlaceOrderAction
 
 

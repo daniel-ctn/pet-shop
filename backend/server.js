@@ -5,6 +5,7 @@ import colors from 'colors'
 import connectDB from './config/db.js'
 import puppyRoutes from './routes/puppyRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/puppy', puppyRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/order', orderRoutes)
 
 app.listen(process.env.PORT || 5000,
   () => console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}!`.yellow.bold))

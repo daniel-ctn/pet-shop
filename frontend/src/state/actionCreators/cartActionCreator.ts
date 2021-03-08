@@ -3,7 +3,7 @@ import {AnyAction} from "redux";
 import axios from "axios";
 
 import {CartActionTypes} from "../actionTypes";
-import {CartModel, ShippingInfoModel} from "../../models/cart";
+import {CartModel, OrderModel, PricesModel, ShippingInfoModel} from "../../models/cart";
 
 export const addItemToCart = function(id:string, qty: number): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
@@ -44,4 +44,37 @@ export const saveShippingAddress = function(info: ShippingInfoModel): ThunkActio
             console.log(e)
         }
     };
+}
+
+export const createOrder = function(info: ShippingInfoModel, items: CartModel[], prices: PricesModel, token: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+        try {
+            const payload: OrderModel = {
+                orderItems: items,
+                shippingAddress: {
+                    address: info.address,
+                    city: info.city,
+                    postalCode: info.postalCode,
+                    country: info.country || ''
+                },
+                paymentMethod: info.paymentMethod,
+                prices
+            }
+
+            const {data} = await axios.post('/api/order', payload,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+            dispatch({
+                type: CartActionTypes.PLACE_ORDER,
+                payload: data
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

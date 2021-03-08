@@ -10,4 +10,25 @@ export interface ShippingInfoModel {
     city: string;
     postalCode: number;
     country?: string;
+    paymentMethod: string;
+}
+
+export interface PricesModel {
+    itemsPrice: number;
+    taxPrice: number;
+    shippingPrice: number;
+    totalPrice: number;
+}
+
+export interface OrderModel {
+    _id? : string;
+    orderItems: CartModel[];
+    shippingAddress: {
+        address: string;
+        city: string;
+        postalCode: number;
+        country: string;
+    },
+    paymentMethod: string;
+    prices: PricesModel;
 }
