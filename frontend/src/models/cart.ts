@@ -21,7 +21,6 @@ export interface PricesModel {
 }
 
 export interface OrderModel {
-    _id? : string;
     orderItems: CartModel[];
     shippingAddress: {
         address: string;
@@ -31,4 +30,20 @@ export interface OrderModel {
     },
     paymentMethod: string;
     prices: PricesModel;
+}
+
+export interface FullOrderModel extends OrderModel{
+    _id? : string;
+    isPaid?: boolean;
+    paidAt?: string;
+    isDelivered?: boolean;
+    deliveredAt?: string;
+    user?: string;
+}
+
+export interface PaymentResultModel {
+    id: string;
+    status: string;
+    update_time: string;
+    email_address: string;
 }

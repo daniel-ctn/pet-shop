@@ -1,11 +1,12 @@
-import {CartModel, OrderModel, ShippingInfoModel} from "../../models/cart";
+import {CartModel, FullOrderModel, OrderModel, ShippingInfoModel} from "../../models/cart";
 import {CartAction, CartActionTypes} from "../actionTypes";
 
 interface CartState {
     cartItems: CartModel[],
     shippingInfo?: ShippingInfoModel,
     orderSuccess: boolean,
-    order?: OrderModel,
+    order?: FullOrderModel,
+    paySuccess?: boolean,
     loading: boolean
 }
 
@@ -29,7 +30,11 @@ const cartReducers = (state: CartState = initialState, action: CartAction): Cart
         case CartActionTypes.SAVE_SHIPPING_INFO:
             return {...state, shippingInfo: action.payload}
         case CartActionTypes.PLACE_ORDER:
-            return {...state, order: action.payload, orderSuccess: true}
+            return {...state, orderSuccess: true, cartItems: [], shippingInfo: undefined}
+        case CartActionTypes.GET_ORDER:
+            return {...state, order: action.payload}
+        case CartActionTypes.ORDER_PAY:
+            return  {...state, paySuccess: action.payload}
         default:
             return state
     }

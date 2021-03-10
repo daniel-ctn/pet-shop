@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from "./pages/ProfilePage";
 import ShippingPage from "./pages/ShippingPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
+import OrderPage from "./pages/OrderPage";
 
 const App: React.FC = () => {
     return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
                     <Route path="/profile" component={ProfilePage}/>
                     <Route path="/shipping" component={ShippingPage}/>
                     <Route path="/placeorder" component={PlaceOrderPage}/>
+                    <Route path="/order/:id" component={OrderPage}/>
                 </Container>
             </main>
             <Footer/>

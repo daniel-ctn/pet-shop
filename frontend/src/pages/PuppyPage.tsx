@@ -36,14 +36,14 @@ const PuppyPage: React.FC = () => {
                     <Col md={6}>
                         <ListGroup variant="flush">
                             <ListGroup.Item>
-                                <h1 className="mt-2 text-primary text-monospace font-weight-bold">{currentPuppy?.name}</h1>
+                                <h2 className="mt-2 text-primary text-monospace font-weight-bold">{currentPuppy?.name}</h2>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Rating value={currentPuppy?.rating} text={`${currentPuppy?.numReviews} reviews`}/>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                <h2>Price: <span
-                                    className="text-warning font-weight-bolder">${currentPuppy?.price}</span></h2>
+                                <h3>Price: <span
+                                    className="text-warning font-weight-bolder">${currentPuppy?.price}</span></h3>
                                 <h5>Status: <span
                                     className={currentPuppy?.countInStock! > 0 ? 'text-success' : 'text-danger'}>
                                     {currentPuppy?.countInStock! > 0 ? 'In Stock' : 'Out of Stock'}</span>

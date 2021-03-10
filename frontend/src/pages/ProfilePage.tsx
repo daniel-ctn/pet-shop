@@ -33,7 +33,7 @@ const ProfilePage: React.FC = () => {
     return (
         <Row className="justify-content-center">
             <Col xs={12} sm={4}>
-                <h2 className="font-weight-normal">Profile</h2>
+                <h3 className="font-weight-normal">Profile</h3>
                 {error && <Message variant="danger">{error}</Message>}
                 {(success && !loading) && <Message variant="success">Profile Updated</Message>}
                 {loading && <Loader/>}
@@ -83,7 +83,7 @@ const ProfilePage: React.FC = () => {
                 </Formik>
             </Col>
             <Col xs={12} sm={8}>
-                <h2 className="font-weight-normal">My Orders</h2>
+                <h3 className="font-weight-normal">My Orders</h3>
             </Col>
         </Row>
     );

@@ -3,9 +3,15 @@ import {AnyAction} from "redux";
 import axios from "axios";
 
 import {CartActionTypes} from "../actionTypes";
-import {CartModel, OrderModel, PricesModel, ShippingInfoModel} from "../../models/cart";
+import {
+    CartModel,
+    FullOrderModel,
+    OrderModel, PaymentResultModel,
+    PricesModel,
+    ShippingInfoModel
+} from "../../models/cart";
 
-export const addItemToCart = function(id:string, qty: number): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+export const addItemToCart = function (id: string, qty: number): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
         try {
             const {data} = await axios.get(`/api/puppy/${id}`)
@@ -31,7 +37,7 @@ export const removeCartItem = (id: string) => {
     }
 }
 
-export const saveShippingAddress = function(info: ShippingInfoModel): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+export const saveShippingAddress = function (info: ShippingInfoModel): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
         try {
             dispatch({
@@ -46,7 +52,7 @@ export const saveShippingAddress = function(info: ShippingInfoModel): ThunkActio
     };
 }
 
-export const createOrder = function(info: ShippingInfoModel, items: CartModel[], prices: PricesModel, token: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+export const createOrder = function (info: ShippingInfoModel, items: CartModel[], prices: PricesModel, token: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
     return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
         try {
             const payload: OrderModel = {
@@ -61,7 +67,7 @@ export const createOrder = function(info: ShippingInfoModel, items: CartModel[],
                 prices
             }
 
-            const {data} = await axios.post('/api/order', payload,
+            await axios.post('/api/order', payload,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -70,8 +76,71 @@ export const createOrder = function(info: ShippingInfoModel, items: CartModel[],
                 })
 
             dispatch({
-                type: CartActionTypes.PLACE_ORDER,
-                payload: data
+                type: CartActionTypes.PLACE_ORDER
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getOrder = function (id: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+        try {
+            const {data} = await axios.get(`/api/order/${id}`)
+
+            let orderItems: CartModel[] = []
+
+            // @ts-ignore
+            await Promise.all(data.orderItems.map(async (item) => {
+                const {data} = await axios.get(`/api/puppy/${item.puppy}`)
+                const orderItem: CartModel = {
+                    puppy: data,
+                    qty: item.qty
+                }
+                orderItems.push(orderItem)
+            }))
+
+            const order: FullOrderModel = {
+                _id: data._id,
+                orderItems,
+                paymentMethod: data.paymentMethod,
+                shippingAddress: data.shippingAddress,
+                prices: {
+                    itemsPrice: data.itemsPrice,
+                    shippingPrice: data.shippingPrice,
+                    taxPrice: data.taxPrice,
+                    totalPrice: data.totalPrice
+                },
+                isPaid: data.isPaid,
+                isDelivered: data.isDelivered,
+                user: data.user
+            }
+
+            dispatch({
+                type: CartActionTypes.GET_ORDER,
+                payload: order
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const payOrder = function (paymentResult: PaymentResultModel, id: string, token: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
+    return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+        try {
+            const {data} = await axios.put(`/api/order/${id}/pay`, paymentResult,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+            dispatch({
+                type: CartActionTypes.ORDER_PAY,
+                payload: true
             })
         } catch (e) {
             console.log(e)

@@ -22,5 +22,9 @@ app.use('/api/puppy', puppyRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/order', orderRoutes)
 
+app.get('/api/config/paypal', (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID)
+})
+
 app.listen(process.env.PORT || 5000,
   () => console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}!`.yellow.bold))

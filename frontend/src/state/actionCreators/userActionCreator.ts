@@ -1,7 +1,7 @@
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from "axios";
-import {userActionTypes} from "../actionTypes/userAction";
+import {userActionTypes} from "../actionTypes";
 import {UserDetails} from "../../models/user";
 
 export const login = function (email: string, password: string): ThunkAction<Promise<void>, {}, {}, AnyAction> {
